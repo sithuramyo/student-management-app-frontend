@@ -17,10 +17,10 @@ import PasswordInput from "@/components/ui/password-input";
 import { useApiMutation } from "@/hooks/useMutation";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import Loading from "@/components/ui/loading";
 import Cookies from 'js-cookie';
 import { useAuthStore } from "@/store/auth"
 import { getDecodedToken } from "@/lib/auth";
+import LoadingButton from "@/components/ui/loading-button";
 
 interface LoginRequest {
   email: string
@@ -41,7 +41,7 @@ export default function AuthServer() {
         Cookies.set("authToken", res.data.accessToken, {
           expires: res.data.expiresIn,
         });
-        
+
         const setUser = useAuthStore.getState().setUser;
 
         const decoded = getDecodedToken(res.data.accessToken);
@@ -132,7 +132,7 @@ export default function AuthServer() {
             >
               {mutation.isPending ? (
                 <>
-                  <Loading />
+                  <LoadingButton />
                   Logging in...
                 </>
               ) : (

@@ -12,6 +12,9 @@ import NotFound from './pages/clients/NotFound';
 import AuthLayout from './layouts/AuthLayout';
 import AuthClient from './components/clients/auth/AuthClient';
 import { loginLoader } from './loaders/loginLoader';
+import Department from './pages/admin/academics/departments/Department';
+import CreateDepartment from './pages/admin/academics/departments/CreateDepartment';
+import EditDepartment from './pages/admin/academics/departments/EditDepartment';
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +37,9 @@ export const router = createBrowserRouter([
     ),
     children: [
       { path: 'dashboard', element: <Dashboard /> },
+      { path: 'departments', element: <Department /> },
+      { path: 'departments/create', element: <CreateDepartment /> },
+      { path: 'departments/edit/:id', element: <EditDepartment /> }
     ],
   },
   {
