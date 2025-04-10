@@ -13,7 +13,7 @@ export function useApiMutation<TReq = any, TRes = any>(
           data: body,
         })
   
-        return response.data // ✅ this is the expected ApiResponse<TRes>
+        return response.data
       },
       ...options,
     })

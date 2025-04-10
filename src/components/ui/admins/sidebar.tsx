@@ -86,7 +86,7 @@ export const AdminSidebar = () => {
     <aside
       className={`bg-white/30 backdrop-blur-md shadow-inner border-r border-gray-300 text-black h-screen transition-[width] duration-300 flex flex-col justify-between ${
         isCollapsed ? "w-[80px]" : "w-64"
-      }`}
+      } shrink-0 z-40`}
     >
       <div>
         {/* Logo/Header */}

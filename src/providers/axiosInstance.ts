@@ -35,7 +35,6 @@ api.interceptors.response.use(
             const status = error.response.status;
             const message = error.response.data?.message || "An error occurred";
             const errMessageArray = error.response.data?.errors || []; // Ensure it's an array
-
             // Convert array to a string (comma-separated)
             const errDescription = Array.isArray(errMessageArray)
                 ? errMessageArray.join(", ")
@@ -59,9 +58,7 @@ api.interceptors.response.use(
                     useErrorStore.getState().triggerNotFound(message);
                     break;
                 case 409:
-                    toast.error("Duplicate Error", {
-                        description: message || "Conflict",
-                    });
+                    toast.error(message);
                     break;
                 case 422:
                     toast.error("Error", {
@@ -70,7 +67,7 @@ api.interceptors.response.use(
                     break;
                 case 500:
                     toast.error("Server Error", {
-                        description: errDescription || "Something went wrong on our end.",
+                        description: errDescription || "Something went wrong.",
                     });
                     break;
                 default:

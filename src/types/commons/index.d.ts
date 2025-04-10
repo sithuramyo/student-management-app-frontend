@@ -13,12 +13,15 @@ declare global {
         errors: string[]
     }
 
+    interface NoRequest { }
+    interface NoResponse { }
+
     type HttpMethod = 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 
     interface MutationPayload<TReq> {
         endpoint: string
         method?: HttpMethod
-        body: ApiRequest<TReq>
+        body?: ApiRequest<TReq>
     }
 
     interface SidebarMenuItem {
@@ -49,6 +52,17 @@ declare global {
         label: string;
         path: string;
     }
+
+    interface EditProps {
+        id: string;
+    }
+
+    interface DeleteProps {
+        label: string;
+        apiUrl: string;
+        queryKey: string[] | string;
+    }
+
 }
 
 export { }

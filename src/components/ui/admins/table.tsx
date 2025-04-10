@@ -1,54 +1,44 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Search } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
 
 export interface Column<T> {
   label: string;
-  accessor?: keyof T; // optional if using custom render
+  accessor?: keyof T;
   sortable?: boolean;
   render?: (row: T) => React.ReactNode;
 }
 
 type ServerTableProps<T> = {
-  fetchData: (
+  useData: (
     page: number,
     pageSize: number,
     search?: string,
     sortBy?: keyof T,
     sortOrder?: "asc" | "desc"
-  ) => Promise<{
-    items: T[];
-    page: number;
-    pageSize: number;
-    totalCount: number;
-    totalPages: number;
-  }>;
+  ) => ReturnType<typeof useQuery>;
   columns: Column<T>[];
 };
 
-export default function AdminTable<T>({ fetchData, columns }: ServerTableProps<T>) {
-  const [data, setData] = useState<T[]>([]);
+export default function AdminTable<T>({ useData, columns }: ServerTableProps<T>) {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(false);
   const [sortBy, setSortBy] = useState<keyof T | undefined>();
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
-  useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      const res = await fetchData(page, pageSize, search, sortBy, sortOrder);
-      setData(res.items);
-      setTotalPages(res.totalPages);
-      setTotalCount(res.totalCount);
-      setLoading(false);
-    };
+  const { data, isLoading } = useData(page, pageSize, search, sortBy, sortOrder);
 
-    loadData();
-  }, [page, pageSize, search, sortBy, sortOrder]);
+  type DataResponse = {
+    items: T[];
+    totalPages: number; 
+    totalCount: number;
+  }
+
+  const rows = (data as DataResponse)?.items ?? [];
+  const totalPages = (data as DataResponse)?.totalPages ?? 1;
+  const totalCount = (data as DataResponse)?.totalCount ?? 0;
 
   const handleSort = (accessor: keyof T) => {
     if (sortBy === accessor) {
@@ -116,14 +106,14 @@ export default function AdminTable<T>({ fetchData, columns }: ServerTableProps<T
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {isLoading ? (
               <tr>
                 <td colSpan={columns.length} className="text-center py-4">
                   Loading...
                 </td>
               </tr>
-            ) : data.length > 0 ? (
-              data.map((row, rowIndex) => (
+            ) : rows.length > 0 ? (
+              rows.map((row, rowIndex) => (
                 <tr key={(row as any).id ?? rowIndex} className="hover:bg-gray-100 transition">
                   {columns.map((col, colIndex) => (
                     <td key={colIndex} className="px-4 py-3">
