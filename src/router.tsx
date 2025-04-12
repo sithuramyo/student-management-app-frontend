@@ -20,6 +20,8 @@ import CreateCourse from './pages/admin/academics/course/CreateCourse';
 import EditCourse from './pages/admin/academics/course/EditCourse';
 import CreatePrerequisite from './pages/admin/academics/prerequisite/CreatePrerequisite';
 import EditPrerequisite from './pages/admin/academics/prerequisite/EditPrerequisite';
+import Student from './pages/admin/platformusers/student/Student';
+import CreateStudent from './pages/admin/platformusers/student/CreateStudent';
 
 export const router = createBrowserRouter([
   {
@@ -49,8 +51,10 @@ export const router = createBrowserRouter([
       { path: 'prerequisite/create',element: <CreatePrerequisite/>},
       { path: 'prerequisite/edit/:id', element: <EditPrerequisite /> },
       { path: 'course',element: <Course/>},
+      { path: 'course/create',element: <CreateCourse/>},
       { path: 'course/edit/:id', element: <EditCourse /> },
-      { path: 'course/create',element: <CreateCourse/>}
+      { path: 'student',element: <Student/>},
+      { path: 'student/create',element: <CreateStudent/>}
     ],
   },
   {
