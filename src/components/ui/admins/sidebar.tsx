@@ -9,18 +9,16 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { sidebarItems } from "@/constants/sidebar";
+import { useAuthStore } from "@/store/auth";
 
 export const AdminSidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
+  const [lastOpenDropdown, setLastOpenDropdown] = useState<number | null>(null);
+
   const location = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const user = {
-    name: "Martin Globe",
-    email: "martin@example.com",
-    image: null,
-  };
+  const { user } = useAuthStore();
 
   const getInitials = (name: string) =>
     name
@@ -39,16 +37,34 @@ export const AdminSidebar = () => {
       "bg-pink-500",
       "bg-indigo-500",
     ];
-    return colors[user.name.charCodeAt(0) % colors.length];
+    return colors[user?.name?.charCodeAt(0) ?? 0 % colors.length];
   };
 
   const toggleSidebar = () => setIsCollapsed(!isCollapsed);
-  const toggleDropdown = (id: number) =>
-    setOpenDropdown(openDropdown === id ? null : id);
+  const toggleDropdown = (id: number) => {
+    if (openDropdown === id) {
+      setOpenDropdown(null);
+      setLastOpenDropdown(null);
+    } else {
+      setOpenDropdown(id);
+      setLastOpenDropdown(id);
+    }
+  };
 
   useEffect(() => {
-    setOpenDropdown(null);
-  }, [location.pathname]);
+    if (!isCollapsed && lastOpenDropdown !== null) {
+      // Delay setting dropdown open until after layout stabilizes
+      const timeout = setTimeout(() => {
+        setOpenDropdown(lastOpenDropdown);
+      }, 50); // Short delay to allow layout to expand first
+  
+      return () => clearTimeout(timeout);
+    } else if (isCollapsed) {
+      setOpenDropdown(null);
+    }
+  }, [isCollapsed]);
+  
+
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -84,17 +100,15 @@ export const AdminSidebar = () => {
 
   return (
     <aside
-      className={`bg-white/30 backdrop-blur-md shadow-inner border-r border-gray-300 text-black h-screen transition-[width] duration-300 flex flex-col justify-between ${
-        isCollapsed ? "w-[80px]" : "w-64"
-      } shrink-0 z-40`}
+      className={`bg-white/30 backdrop-blur-md shadow-inner border-r border-gray-300 text-black h-screen transition-[width] duration-300 flex flex-col justify-between ${isCollapsed ? "w-[80px]" : "w-64"
+        } shrink-0 z-40`}
     >
       <div>
         {/* Logo/Header */}
         <div className="px-4 pt-4 pb-2">
           <div
-            className={`flex items-center ${
-              isCollapsed ? "justify-center" : "justify-between"
-            }`}
+            className={`flex items-center ${isCollapsed ? "justify-center" : "justify-between"
+              }`}
           >
             <Link to="/" className="flex items-center gap-5">
               <div className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
@@ -137,11 +151,10 @@ export const AdminSidebar = () => {
                 {item.isDropdown ? (
                   <>
                     <button
-                      className={`flex items-center w-full gap-4 px-3 py-2 rounded transition group ${
-                        openDropdown === item.id
-                          ? "bg-[#9db582] text-green-900"
-                          : "hover:bg-green-50"
-                      }`}
+                      className={`flex items-center w-full gap-4 px-3 py-2 rounded transition group ${openDropdown === item.id
+                        ? "bg-[#b2afaf] text-white"
+                        : "hover:bg-white"
+                        }`}
                       onClick={() => toggleDropdown(item.id)}
                       aria-expanded={openDropdown === item.id}
                     >
@@ -181,13 +194,12 @@ export const AdminSidebar = () => {
                             <motion.li key={child.id} variants={itemVariants}>
                               <Link
                                 to={child.path}
-                                className={`flex items-center gap-2 px-3 py-2 rounded transition ${
-                                  isActive(child.path)
-                                    ? "bg-[#9db582] text-white"
-                                    : "hover:bg-green-100 text-gray-800"
-                                }`}
+                                className={`flex items-center gap-2 px-3 py-2 rounded transition ${isActive(child.path)
+                                  ? "bg-[#b2afaf] text-white"
+                                  : "hover:bg-[#9f9f9f] text-gray-800"
+                                  }`}
                               >
-                                <Dot size={18} />
+                                <Dot size={24} />
                                 {child.label}
                               </Link>
                             </motion.li>
@@ -213,7 +225,7 @@ export const AdminSidebar = () => {
                                 <li key={child.id}>
                                   <Link
                                     to={child.path}
-                                    className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-green-100 text-gray-800 transition-all whitespace-nowrap text-sm"
+                                    className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-[#9f9f9f] text-gray-800 transition-all whitespace-nowrap text-sm"
                                   >
                                     <Dot size={18} />
                                     <span>{child.label}</span>
@@ -229,11 +241,10 @@ export const AdminSidebar = () => {
                 ) : (
                   <Link
                     to={item.path || "#"}
-                    className={`flex items-center gap-4 px-3 py-2 rounded transition ${
-                      isActive(item.path)
-                        ? "bg-[#9db582] text-white"
-                        : "hover:bg-green-100 text-gray-800"
-                    }`}
+                    className={`flex items-center gap-4 px-3 py-2 rounded transition ${isActive(item.path)
+                      ? "bg-[#b2afaf] text-white"
+                      : "hover:bg-[#9f9f9f] text-gray-800"
+                      }`}
                     title={isCollapsed ? item.label : ""}
                   >
                     <item.icon className="shrink-0" />
@@ -259,17 +270,17 @@ export const AdminSidebar = () => {
 
       {/* User Info Footer */}
       <div className="p-4 border-t border-gray-200 flex items-center gap-3">
-        {user.image ? (
+        {user?.profile && user.profile.trim() !== "" ? (
           <img
-            src={user.image}
+            src={user?.profile}
             alt="Profile"
             className="w-10 h-10 rounded-full object-cover shadow-md ring-2 ring-white"
           />
         ) : (
           <div
-            className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-white shadow-md ring-2 ring-white ${getRandomColor()}`}
+            className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shadow-md ring-2 ring-white ${getRandomColor()}`}
           >
-            {getInitials(user.name)}
+            {getInitials(user?.name || "")}
           </div>
         )}
         <AnimatePresence>
@@ -280,9 +291,9 @@ export const AdminSidebar = () => {
               exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="font-medium text-sm">{user.name}</div>
+              <div className="font-medium text-sm">{user?.name || ""}</div>
               <div className="text-xs text-gray-500 truncate">
-                {user.email}
+                {user?.email || ""}
               </div>
             </motion.div>
           )}

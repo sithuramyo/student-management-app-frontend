@@ -1,0 +1,150 @@
+import {
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import { ChevronDown } from "lucide-react";
+import { ControllerRenderProps, FieldValues, Path } from "react-hook-form";
+import { useMemo } from "react";
+import { cn } from "@/lib/utils";
+
+type Option = {
+    label: string;
+    value: string;
+};
+
+interface FormSmartSelectProps<T extends FieldValues> {
+    name: keyof T;
+    control: any;
+    label?: string;
+    placeholder?: string;
+    options: Option[];
+    isMulti?: boolean;
+    disabled?: boolean;
+}
+
+export function FormSmartSelect<T extends FieldValues>({
+    name,
+    control,
+    label,
+    placeholder = "Select an option",
+    options,
+    isMulti = false,
+    disabled,
+}: FormSmartSelectProps<T>) {
+    return (
+        <FormField
+            control={control}
+            name={name as Path<T>}
+            render={({ field }: { field: ControllerRenderProps<T, Path<T>> }) => {
+                const selectedValues: string[] = Array.isArray(field.value) ? field.value : [];
+
+                if (!isMulti) {
+                    // Single select
+                    return (
+                        <FormItem>
+                            {label && <FormLabel>{label}</FormLabel>}
+                            <FormControl>
+                                <Select
+                                    disabled={disabled}
+                                    onValueChange={field.onChange}
+                                    value={field.value ?? ""}
+                                >
+                                    <SelectTrigger className="w-full">
+                                        <SelectValue placeholder={placeholder} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {options.map((option) => (
+                                            <SelectItem key={option.value} value={option.value}>
+                                                {option.label}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    );
+                }
+
+                // Multi-select
+                const displayText = useMemo(() => {
+                    if (!selectedValues.length) return placeholder;
+                    return options
+                        .filter((opt) => selectedValues.includes(opt.value))
+                        .map((opt) => opt.label)
+                        .join(", ");
+                }, [selectedValues, options, placeholder]);
+
+                const toggleValue = (val: string) => {
+                    const exists = selectedValues.includes(val);
+                    const updated = exists
+                        ? selectedValues.filter((v: string) => v !== val)
+                        : [...selectedValues, val];
+                    field.onChange(updated);
+                };
+
+                return (
+                    <FormItem>
+                        {label && <FormLabel>{label}</FormLabel>}
+                        <FormControl>
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <Button
+                                        variant="outline"
+                                        className={cn(
+                                            "w-full justify-between",
+                                            !selectedValues.length && "text-muted-foreground"
+                                        )}
+                                        disabled={disabled}
+                                    >
+                                        {displayText}
+                                        <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-full max-h-60 overflow-y-auto p-2">
+                                    {options.map((option) => (
+                                        <div
+                                            key={option.value}
+                                            className="flex items-center space-x-2 p-1 hover:bg-accent/50 rounded-md"
+                                            onClick={() => toggleValue(option.value)}
+                                        >
+                                            <Checkbox
+                                                id={option.value}
+                                                checked={selectedValues.includes(option.value)}
+                                                onCheckedChange={() => toggleValue(option.value)}
+                                            />
+                                            <label
+                                                htmlFor={option.value}
+                                                className="text-sm font-normal leading-none"
+                                            >
+                                                {option.label}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </PopoverContent>
+                            </Popover>
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                );
+            }}
+        />
+    );
+}

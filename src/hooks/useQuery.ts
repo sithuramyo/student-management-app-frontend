@@ -1,7 +1,7 @@
 import api from "@/providers/axiosInstance";
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 
-export interface ApiResponse<T> {
+export interface Response<T> {
   success: boolean;
   message: string;
   data: T;
@@ -10,7 +10,7 @@ export interface ApiResponse<T> {
 export interface QueryPayload<T = any> {
   endpoint: string;
   params?: T;
-  queryKey?: any[]; // optional override key
+  queryKey?: any[];
 }
 
 export function useApiQuery<TParams = any, TRes = any>(
@@ -20,7 +20,7 @@ export function useApiQuery<TParams = any, TRes = any>(
   return useQuery<TRes, Error>({
     queryKey: queryKey ?? [endpoint, params],
     queryFn: async () => {
-      const res = await api.get<ApiResponse<TRes>>(endpoint, {
+      const res = await api.get<Response<TRes>>(endpoint, {
         params,
       });
       return res.data.data;

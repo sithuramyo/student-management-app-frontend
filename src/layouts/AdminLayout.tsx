@@ -6,7 +6,7 @@ import { Toaster } from "sonner";
 
 const AdminLayout: React.FC = () => {
   return (
-    <div className="flex h-screen overflow-hidden bg-gradient-to-b from-[#A8C686] via-[#f0f0f0] to-white">
+    <div className="flex h-screen overflow-hidden bg-gradient-to-b from-[#b2afaf] via-[#f0f0f0] to-white">
       {/* Sidebar stays fixed */}
       <AdminSidebar />
       <Toaster />

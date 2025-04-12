@@ -5,6 +5,8 @@ interface AuthUser {
   typ: string;
   name: string;
   sub: string;
+  email: string;
+  profile: string;
 }
 
 interface AuthState {

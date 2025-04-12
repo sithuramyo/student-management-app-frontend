@@ -53,7 +53,7 @@ export default function Edit({ id }: EditProps) {
     const mutation = useApiMutation<DepartmentRequest, NoResponse>({
         onSuccess: (res) => {
             toast.success(res.message);
-            navigate("/admin/departments");
+            navigate("/admin/department");
         }
     });
 
