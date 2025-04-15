@@ -10,7 +10,8 @@ export const navbarItems: NavbarMenuItem[] = [
         isDropdown: true,
         children: [
             { id: 1, label: "System User", path: "/admin/system-user" },
-            { id: 2, label: "Student", path: "/admin/student" }
+            { id: 2, label: "Student", path: "/admin/student" },
+            { id: 3, label: "Faculty", path: "/admin/faculty" }
         ]
     },
     {
@@ -20,7 +21,8 @@ export const navbarItems: NavbarMenuItem[] = [
         children: [
             { id: 1, label: "Department", path: "/admin/department" },
             { id: 2, label: "Prerequisite", path: "/admin/prerequisite" },
-            { id: 3, label: "Course", path: "/admin/course" }
+            { id: 3, label: "Course", path: "/admin/course" },
+            { id: 3, label: "Academic Terms", path: "/admin/academic-term" }
         ]
     }
 

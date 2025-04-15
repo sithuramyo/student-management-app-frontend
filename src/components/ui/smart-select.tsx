@@ -26,7 +26,7 @@ import { cn } from "@/lib/utils";
 
 type Option = {
     label: string;
-    value: string;
+    value: string | number;
 };
 
 interface FormSmartSelectProps<T extends FieldValues> {
@@ -63,15 +63,15 @@ export function FormSmartSelect<T extends FieldValues>({
                             <FormControl>
                                 <Select
                                     disabled={disabled}
-                                    onValueChange={field.onChange}
-                                    value={field.value ?? ""}
+                                    onValueChange={(val) => field.onChange(Number(val))}
+                                    value={field.value !== undefined && field.value !== null ? field.value.toString() : ""}
                                 >
                                     <SelectTrigger className="w-full">
-                                        <SelectValue placeholder={placeholder} />
+                                        <SelectValue placeholder={placeholder || "Select an option"} />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {options.map((option) => (
-                                            <SelectItem key={option.value} value={option.value}>
+                                            <SelectItem key={option.value} value={option.value.toString()}>
                                                 {option.label}
                                             </SelectItem>
                                         ))}
@@ -87,7 +87,7 @@ export function FormSmartSelect<T extends FieldValues>({
                 const displayText = useMemo(() => {
                     if (!selectedValues.length) return placeholder;
                     return options
-                        .filter((opt) => selectedValues.includes(opt.value))
+                        .filter((opt) => selectedValues.includes(opt.value.toString()))
                         .map((opt) => opt.label)
                         .join(", ");
                 }, [selectedValues, options, placeholder]);
@@ -123,15 +123,15 @@ export function FormSmartSelect<T extends FieldValues>({
                                         <div
                                             key={option.value}
                                             className="flex items-center space-x-2 p-1 hover:bg-accent/50 rounded-md"
-                                            onClick={() => toggleValue(option.value)}
+                                            onClick={() => toggleValue(option.value.toString())}
                                         >
                                             <Checkbox
-                                                id={option.value}
-                                                checked={selectedValues.includes(option.value)}
-                                                onCheckedChange={() => toggleValue(option.value)}
+                                                id={option.value.toString()}
+                                                checked={selectedValues.includes(option.value.toString())}
+                                                onCheckedChange={() => toggleValue(option.value.toString())}
                                             />
                                             <label
-                                                htmlFor={option.value}
+                                                htmlFor={option.value.toString()}
                                                 className="text-sm font-normal leading-none"
                                             >
                                                 {option.label}

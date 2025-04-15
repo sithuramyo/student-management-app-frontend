@@ -42,8 +42,8 @@ api.interceptors.response.use(
 
             switch (status) {
                 case 400:
-                    toast.error("Request Failed", {
-                        description: errDescription || "Bad Request",
+                    toast.error("Bad Request", {
+                        description: errDescription || message,
                     });
                     break;
                 case 401:

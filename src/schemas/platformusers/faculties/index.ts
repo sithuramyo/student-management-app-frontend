@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const studentFormSchema = z.object({
+export const facultyFormSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email"),
   birthDate: z.object({
@@ -11,19 +11,9 @@ export const studentFormSchema = z.object({
   }),
   gender: z.number({ required_error: "Gender is required" }).optional(),
   phoneNumber: z.string().min(1, "Phone number is required"),
-  address: z.string().min(1, "Address is required"),
+  specialization: z.string().min(1, "Specialization is required"),
   status: z.number({ required_error: "Status is required" }).optional(),
   profile: z.string().url("Invalid URL for profile image"),
 });
 
-export type StudentFormSchema = z.infer<typeof studentFormSchema>;
-
-export const guardianFormSchema = z.object({
-  guardianName: z.string().min(1, "Name is required"),
-  relationship: z.string().min(1, "Relationship is required"),
-  contactNumber: z.string().min(1, "Contact number is required"),
-  guardianEmail: z.string().email("Invalid email"),
-  guardianAddress: z.string().min(1, "Address is required"),
-});
-
-export type GuardianFormSchema = z.infer<typeof guardianFormSchema>;
+export type FacultyFormSchema = z.infer<typeof facultyFormSchema>;

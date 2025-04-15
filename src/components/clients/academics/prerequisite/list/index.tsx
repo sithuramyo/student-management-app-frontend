@@ -25,10 +25,10 @@ export default function Prerequisites() {
         {
             label: "Mandatory", render: (row) => (
                 <span
-                    className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-semibold ${row.isMandatory
-                            ? "bg-green-100 text-green-800"
-                            : "bg-gray-100 text-gray-700"
-                        }`}
+                    className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-semibold
+                    ${row.isMandatory
+                            ? "bg-green-100 text-green-800 ring-1 ring-green-400 shadow-sm animate-pulse"
+                            : "bg-gray-100 text-gray-700"}`}
                 >
                     {row.isMandatory ? (
                         <>
@@ -38,7 +38,7 @@ export default function Prerequisites() {
                     ) : (
                         <>
                             <MinusCircle className="w-4 h-4" />
-                            Optional
+                            Not Mandatory
                         </>
                     )}
                 </span>

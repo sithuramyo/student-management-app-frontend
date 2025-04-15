@@ -22,6 +22,14 @@ import CreatePrerequisite from './pages/admin/academics/prerequisite/CreatePrere
 import EditPrerequisite from './pages/admin/academics/prerequisite/EditPrerequisite';
 import Student from './pages/admin/platformusers/student/Student';
 import CreateStudent from './pages/admin/platformusers/student/CreateStudent';
+import SystemUser from './pages/admin/platformusers/systemuser/SystemUser';
+import CreateSystemUser from './pages/admin/platformusers/systemuser/CreateSystemUser';
+import EditSystemUser from './pages/admin/platformusers/systemuser/EditSystemUser';
+import AcademicTerm from './pages/admin/academics/academicterms/AcademicTerm';
+import CreateAcademicTerm from './pages/admin/academics/academicterms/CreateAcademicTerm';
+import EditAcademicTerm from './pages/admin/academics/academicterms/EditAcademicTerm';
+import Faculty from './pages/admin/academics/faculties/faculty';
+import CreateFaculty from './pages/admin/academics/faculties/CreateFaculty';
 
 export const router = createBrowserRouter([
   {
@@ -45,16 +53,24 @@ export const router = createBrowserRouter([
     children: [
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'department', element: <Department /> },
+      { path: 'academic-term', element: <AcademicTerm /> },
+      { path: 'academic-term/create', element: <CreateAcademicTerm /> },
+      { path: 'academic-term/edit/:id', element: <EditAcademicTerm /> },
       { path: 'department/create', element: <CreateDepartment /> },
       { path: 'department/edit/:id', element: <EditDepartment /> },
-      { path: 'prerequisite',element: <Prerequisite/>},
-      { path: 'prerequisite/create',element: <CreatePrerequisite/>},
+      { path: 'prerequisite', element: <Prerequisite /> },
+      { path: 'prerequisite/create', element: <CreatePrerequisite /> },
       { path: 'prerequisite/edit/:id', element: <EditPrerequisite /> },
-      { path: 'course',element: <Course/>},
-      { path: 'course/create',element: <CreateCourse/>},
+      { path: 'course', element: <Course /> },
+      { path: 'course/create', element: <CreateCourse /> },
       { path: 'course/edit/:id', element: <EditCourse /> },
-      { path: 'student',element: <Student/>},
-      { path: 'student/create',element: <CreateStudent/>}
+      { path: 'system-user', element: <SystemUser /> },
+      { path: 'system-user/create', element: <CreateSystemUser /> },
+      { path: 'system-user/edit/:id', element: <EditSystemUser /> },
+      { path: 'student', element: <Student /> },
+      { path: 'student/create', element: <CreateStudent /> },
+      { path: 'faculty', element: <Faculty /> },
+      { path: 'faculty/create', element: <CreateFaculty /> }
     ],
   },
   {

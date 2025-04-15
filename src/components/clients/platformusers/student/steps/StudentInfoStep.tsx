@@ -1,4 +1,3 @@
-// components/forms/steps/StudentInfoStep.tsx
 import { useFormContext } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -40,20 +39,27 @@ export default function StudentInfoStep() {
 
             <FormSmartSelect
                 name="studentInfo.gender"
+                placeholder="Select Gender"
                 label="Gender"
                 options={[
-                    { label: "Male", value: "male" },
-                    { label: "Female", value: "female" },
-                    { label: "Other", value: "other" },
+                    { label: "Male", value: 0 },
+                    { label: "Female", value: 1 },
+                    { label: "Other", value: 2 },
                 ]} control={control} />
 
             <FormSmartSelect
                 control={control}
                 name="studentInfo.status"
+                placeholder="Select Status"
                 label="Status"
                 options={[
-                    { label: "Active", value: "active" },
-                    { label: "Inactive", value: "inactive" },
+                    { label: "Active", value: 1 },
+                    { label: "Inactive", value: 2 },
+                    { label: "Graduated", value: 3 },
+                    { label: "Dropped", value: 4 },
+                    { label: "Suspended", value: 5 },
+                    { label: "Transferred", value: 6 },
+                    { label: "Alumni", value: 7},
                 ]}
             />
 

@@ -35,7 +35,7 @@ export default function Edit({ id }: EditProps) {
             value: p.code,
         })) || [];
 
-    const { data: prerequisite, isLoading } = useApiQuery<undefined, FormSchema>({
+    const { data: prerequisite } = useApiQuery<undefined, FormSchema>({
         endpoint: `/prerequisite/${id}`,
         queryKey: ["prerequisite", id],
     });

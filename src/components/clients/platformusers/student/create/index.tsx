@@ -14,7 +14,6 @@ import StepIndicator from "../steps/StepIndicator";
 import { AnimatePresence, motion } from "framer-motion";
 import LoadingButton from "@/components/ui/loading-button";
 
-// ✅ Final Combined Schema (no loginInfo anymore)
 const formSchema = z.object({
     studentInfo: studentFormSchema,
     guardianInfo: guardianFormSchema,
@@ -55,10 +54,10 @@ const defaultValues: FormData = {
         name: "",
         email: "",
         birthDate: { year: 2000, month: 1, day: 1 },
-        gender: "",
+        gender: undefined,
         phoneNumber: "",
         address: "",
-        status: "",
+        status: undefined,
         profile: "",
     },
     guardianInfo: {
@@ -78,10 +77,10 @@ interface CreateStudentRequest {
     studentInfo: {
         name: string;
         birthDate: Date;
-        gender: string;
+        gender: number;
         phoneNumber: string;
         address: string;
-        status: string;
+        status: number;
         profile: string;
     };
     guardianInfo: {
@@ -122,10 +121,10 @@ export default function CreateStudentPage() {
             studentInfo: {
                 name: data.studentInfo.name,
                 birthDate: formattedBirthDate as unknown as Date,
-                gender: data.studentInfo.gender,
+                gender: data.studentInfo.gender as number,
                 phoneNumber: data.studentInfo.phoneNumber,
                 address: data.studentInfo.address,
-                status: data.studentInfo.status,
+                status: data.studentInfo.status as number,
                 profile: data.studentInfo.profile,
             },
             guardianInfo: {
@@ -149,7 +148,7 @@ export default function CreateStudentPage() {
     return (
         <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)} className="py-6 px-2">
-                <Card className="max-w-3xl mx-auto">
+                <Card className="max-w-4xl mx-auto">
                     <CardContent className="pt-6">
                         <StepIndicator
                             currentStep={step}
@@ -174,13 +173,14 @@ export default function CreateStudentPage() {
 
                         <div className="flex justify-between pt-6">
                             {!isFirst && (
-                                <Button type="button" onClick={back}>
+                                <Button variant="outline" type="button" onClick={back}>
                                     Back
                                 </Button>
                             )}
                             {!isLast ? (
                                 <Button
                                     type="button"
+                                    variant="outline"
                                     onClick={async () => {
                                         const isValid = await methods.trigger(getStepFields(step) as any);
                                         if (isValid) next();
@@ -189,7 +189,7 @@ export default function CreateStudentPage() {
                                     Next
                                 </Button>
                             ) : (
-                                <Button type="submit" disabled={mutation.isPending}>
+                                <Button variant="outline" type="submit" disabled={mutation.isPending}>
                                     {mutation.isPending ? <>
                                         <LoadingButton />
                                         Creating...
