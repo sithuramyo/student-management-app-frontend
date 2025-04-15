@@ -8,7 +8,7 @@ import { FormSmartSelect } from "@/components/ui/smart-select";
 import { Textarea } from "@/components/ui/textarea";
 import { useDepartmentOptions, usePrerequisiteOptions } from "@/hooks/admins/common";
 import { useApiMutation } from "@/hooks/useMutation";
-import { formSchema, FormSchema } from "@/schemas/academics/courses";
+import { formSchema, FormSchema } from "@/schemas/admins/academics/courses";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";

@@ -1,6 +1,6 @@
 import { useApiMutation } from "@/hooks/useMutation";
 import { useApiQuery } from "@/hooks/useQuery";
-import { formSchema, FormSchema } from "@/schemas/academics/academicterms";
+import { formSchema, FormSchema } from "@/schemas/admins/academics/academicterms";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";

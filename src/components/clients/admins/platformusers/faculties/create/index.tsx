@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import LoadingButton from "@/components/ui/loading-button";
 import { FormSmartSelect } from "@/components/ui/smart-select";
 import { useApiMutation } from "@/hooks/useMutation";
-import { facultyFormSchema, FacultyFormSchema } from "@/schemas/platformusers/faculties";
+import { facultyFormSchema, FacultyFormSchema } from "@/schemas/admins/platformusers/faculties";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";

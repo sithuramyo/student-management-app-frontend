@@ -22,7 +22,7 @@ import { useApiMutation } from "@/hooks/useMutation";
 import { FormSmartSelect } from "@/components/ui/smart-select";
 import { useCourseOptions } from "@/hooks/admins/common";
 import { useApiQuery } from "@/hooks/useQuery";
-import { formSchema, FormSchema } from "@/schemas/academics/prerequisites";
+import { formSchema, FormSchema } from "@/schemas/admins/academics/prerequisites";
 
 
 export default function Edit({ id }: EditProps) {

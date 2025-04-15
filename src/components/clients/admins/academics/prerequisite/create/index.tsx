@@ -19,7 +19,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import LoadingButton from "@/components/ui/loading-button";
 import { useApiMutation } from "@/hooks/useMutation";
-import { formSchema, FormSchema } from "@/schemas/academics/prerequisites";
+import { formSchema, FormSchema } from "@/schemas/admins/academics/prerequisites";
 import { useCourseOptions } from "@/hooks/admins/common";
 import { FormSmartSelect } from "@/components/ui/smart-select";
 

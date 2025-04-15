@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useApiQuery } from "@/hooks/useQuery";
 import { useApiMutation } from "@/hooks/useMutation";
-import { FormSchema, formSchema } from "@/schemas/academics/departments";
+import { FormSchema, formSchema } from "@/schemas/admins/academics/departments";
 
 import {
   Form,

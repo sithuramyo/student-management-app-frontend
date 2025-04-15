@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import LoadingButton from "@/components/ui/loading-button";
 import { useApiMutation } from "@/hooks/useMutation";
 import { useApiQuery } from "@/hooks/useQuery";
-import { formSchema, FormSchema } from "@/schemas/platformusers/systemusers";
+import { formSchema, FormSchema } from "@/schemas/admins/platformusers/systemusers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";

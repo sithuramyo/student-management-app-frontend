@@ -1,7 +1,7 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { studentFormSchema, guardianFormSchema } from "@/schemas/platformusers/students";
+import { studentFormSchema, guardianFormSchema } from "@/schemas/admins/platformusers/students";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useApiMutation } from "@/hooks/useMutation";

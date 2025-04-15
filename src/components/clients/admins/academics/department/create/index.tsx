@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import LoadingButton from "@/components/ui/loading-button";
 import { Textarea } from "@/components/ui/textarea";
 import { useApiMutation } from "@/hooks/useMutation";
-import { FormSchema, formSchema } from "@/schemas/academics/departments";
+import { FormSchema, formSchema } from "@/schemas/admins/academics/departments";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";

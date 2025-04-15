@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import LoadingButton from "@/components/ui/loading-button";
 import { useApiMutation } from "@/hooks/useMutation";
-import { formSchema, FormSchema } from "@/schemas/platformusers/systemusers";
+import { formSchema, FormSchema } from "@/schemas/admins/platformusers/systemusers";
 
 interface SystemUserRequest {
   name: string;

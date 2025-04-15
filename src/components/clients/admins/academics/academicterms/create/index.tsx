@@ -7,7 +7,7 @@ import {
     FormLabel,
     FormMessage
 } from "@/components/ui/form";
-import { formSchema, FormSchema } from "@/schemas/academics/academicterms";
+import { formSchema, FormSchema } from "@/schemas/admins/academics/academicterms";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useApiMutation } from "@/hooks/useMutation";
