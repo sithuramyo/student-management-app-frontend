@@ -9,15 +9,13 @@ import { Link, useLocation } from "react-router-dom";
 import { navbarItems } from "@/constants/admins/navbar";
 import { useMemo } from "react";
 
-const capitalize = (text: string) =>
-  text.charAt(0).toUpperCase() + text.slice(1);
 
 const Navbar = () => {
   const location = useLocation();
 
   const breadcrumbs = useMemo(() => {
     const path = location.pathname;
-    const segments = path.split("/").filter(Boolean); // e.g., ["admin", "departments", "edit", "123"]
+    const segments = path.split("/").filter(Boolean);
     const matched: { label: string; path?: string }[] = [];
 
     for (const item of navbarItems) {
