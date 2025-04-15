@@ -6,7 +6,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Link, useLocation } from "react-router-dom";
-import { navbarItems } from "@/constants/navbar";
+import { navbarItems } from "@/constants/admins/navbar";
 import { useMemo } from "react";
 
 const capitalize = (text: string) =>

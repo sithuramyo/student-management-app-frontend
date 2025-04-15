@@ -8,7 +8,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { sidebarItems } from "@/constants/sidebar";
+import { sidebarItems } from "@/constants/admins/sidebar";
 import { useAuthStore } from "@/store/auth";
 
 export const AdminSidebar = () => {
