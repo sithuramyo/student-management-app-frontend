@@ -1,4 +1,4 @@
-import Departments from "@/components/clients/academics/department/list";
+import Departments from "@/components/clients/admins/academics/department/list";
 
 export default function Department() {
   return (

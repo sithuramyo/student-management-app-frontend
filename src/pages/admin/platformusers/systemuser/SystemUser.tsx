@@ -1,4 +1,4 @@
-import SystemUsers from "@/components/clients/platformusers/systemusers/list";
+import SystemUsers from "@/components/clients/admins/platformusers/systemusers/list";
 
 export default function SystemUser() {
   return (

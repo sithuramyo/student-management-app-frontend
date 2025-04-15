@@ -1,4 +1,4 @@
-import Edit from '@/components/clients/academics/prerequisite/edit';
+import Edit from '@/components/clients/admins/academics/prerequisite/edit';
 import { useParams } from 'react-router-dom';
 
 export default function EditPrerequisite() {

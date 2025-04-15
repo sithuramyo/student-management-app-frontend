@@ -1,4 +1,4 @@
-import Edit from "@/components/clients/platformusers/systemusers/edit";
+import Edit from "@/components/clients/admins/platformusers/systemusers/edit";
 import { useParams } from "react-router-dom";
 
 export default function EditSystemUser() {

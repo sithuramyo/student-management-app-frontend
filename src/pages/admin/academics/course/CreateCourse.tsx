@@ -1,4 +1,4 @@
-import Create from "@/components/clients/academics/course/create";
+import Create from "@/components/clients/admins/academics/course/create";
 
 export default function CreateCourse() {
   return (

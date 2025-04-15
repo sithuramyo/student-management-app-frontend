@@ -1,4 +1,4 @@
-import Edit from '@/components/clients/academics/course/edit';
+import Edit from '@/components/clients/admins/academics/course/edit';
 import { useParams } from 'react-router-dom';
 
 

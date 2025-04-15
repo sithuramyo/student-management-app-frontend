@@ -1,4 +1,4 @@
-import Create from "@/components/clients/platformusers/student/create";
+import Create from "@/components/clients/admins/platformusers/student/create";
 
 export default function CreateStudent() {
   return (

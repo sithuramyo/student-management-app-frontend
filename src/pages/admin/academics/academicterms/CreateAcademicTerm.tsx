@@ -1,4 +1,4 @@
-import Create from "@/components/clients/academics/academicterms/create";
+import Create from "@/components/clients/admins/academics/academicterms/create";
 
 export default function CreateAcademicTerm() {
   return (

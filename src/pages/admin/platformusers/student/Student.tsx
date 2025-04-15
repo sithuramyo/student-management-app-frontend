@@ -1,4 +1,4 @@
-import Students from "@/components/clients/platformusers/student/list";
+import Students from "@/components/clients/admins/platformusers/student/list";
 
 export default function Student() {
     return (

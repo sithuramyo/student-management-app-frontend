@@ -1,4 +1,4 @@
-import Prerequisites from "@/components/clients/academics/prerequisite/list";
+import Prerequisites from "@/components/clients/admins/academics/prerequisite/list";
 
 export default function Prerequisite() {
   return (

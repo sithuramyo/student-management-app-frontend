@@ -1,4 +1,4 @@
-import Edit from '@/components/clients/academics/department/edit';
+import Edit from '@/components/clients/admins/academics/department/edit';
 import { useParams } from 'react-router-dom';
 
 export default function EditDepartment() {
