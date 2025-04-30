@@ -63,7 +63,7 @@ export function FormSmartSelect<T extends FieldValues>({
                             <FormControl>
                                 <Select
                                     disabled={disabled}
-                                    onValueChange={(val) => field.onChange(Number(val))}
+                                    onValueChange={(val) => field.onChange(val)}
                                     value={field.value !== undefined && field.value !== null ? field.value.toString() : ""}
                                 >
                                     <SelectTrigger className="w-full">

@@ -15,10 +15,10 @@ const defaultValues: FacultyFormSchema = {
   name: "",
   email: "",
   birthDate: { year: 1990, month: 1, day: 1 },
-  gender: undefined,
+  gender: 4,
   phoneNumber: "",
   specialization: "",
-  status: undefined,
+  status: 4,
   profile: "",
 };
 
@@ -56,7 +56,8 @@ export default function Create() {
   const onSubmit = (data: FacultyFormSchema) => {
     const { year, month, day } = data.birthDate;
     const formattedBirthDate = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-
+    const gender = Number(data.gender);
+    const status = Number(data.status);
     const request: CreateFacultyRequest = {
       loginInfo: {
         email: data.email,
@@ -65,10 +66,10 @@ export default function Create() {
       facultyInfo: {
         name: data.name,
         birthDate: formattedBirthDate as unknown as Date,
-        gender: data.gender as number,
+        gender: gender,
         phoneNumber: data.phoneNumber,
         specialization: data.specialization,
-        status: data.status as number,
+        status: status,
         profile: data.profile,
       },
     };

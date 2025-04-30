@@ -28,8 +28,10 @@ import EditSystemUser from './pages/admin/platformusers/systemuser/EditSystemUse
 import AcademicTerm from './pages/admin/academics/academicterms/AcademicTerm';
 import CreateAcademicTerm from './pages/admin/academics/academicterms/CreateAcademicTerm';
 import EditAcademicTerm from './pages/admin/academics/academicterms/EditAcademicTerm';
-import Faculty from './pages/admin/academics/faculties/faculty';
 import CreateFaculty from './pages/admin/academics/faculties/CreateFaculty';
+import CourseOffering from './pages/admin/academics/courseofferings/CourseOffering';
+import Faculty from './pages/admin/academics/faculties/Faculty';
+import CreateCourseOffering from './pages/admin/academics/courseofferings/CreateCourseOffering';
 
 export const router = createBrowserRouter([
   {
@@ -64,6 +66,8 @@ export const router = createBrowserRouter([
       { path: 'course', element: <Course /> },
       { path: 'course/create', element: <CreateCourse /> },
       { path: 'course/edit/:id', element: <EditCourse /> },
+      { path: 'course-offering', element: <CourseOffering /> },
+      { path: 'course-offering/create', element: <CreateCourseOffering /> },
       { path: 'system-user', element: <SystemUser /> },
       { path: 'system-user/create', element: <CreateSystemUser /> },
       { path: 'system-user/edit/:id', element: <EditSystemUser /> },

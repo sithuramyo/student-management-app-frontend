@@ -95,8 +95,12 @@ export const AdminSidebar = () => {
     visible: { opacity: 1, x: 0 },
   };
 
-  const isActive = (path?: string) =>
-    path && location.pathname.startsWith(path);
+  const isActive = (path?: string) => {
+    if (!path) return false;
+    const current = location.pathname;
+    return current === path || current.startsWith(path + "/");
+  };
+  
 
   return (
     <aside

@@ -47,7 +47,7 @@ export default function Create() {
     const mutation = useApiMutation<AcademicTermRequest, NoResponse>({
         onSuccess: (res) => {
             toast.success(res.message);
-            navigate("/admin/academic-terms");
+            navigate("/admin/academic-term");
         },
     });
 

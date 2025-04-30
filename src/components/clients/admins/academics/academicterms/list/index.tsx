@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import EditButton from "@/components/ui/admins/edit-button";
 import DeleteSection from "@/components/ui/admins/delete-section";
 import { usePaginatedQuery } from "@/hooks/usePaginatedQuery";
-import { CheckCircle, MinusCircle } from "lucide-react";
+import { CheckCircle, MinusCircle,Clock } from "lucide-react";
 import { format } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -14,7 +14,6 @@ export interface AcademicTerm {
   name: string;
   startDate: string;
   endDate: string;
-  isCurrentTerm: string;
 }
 
 
@@ -80,28 +79,38 @@ export default function AcademicTerms() {
       ),
     },
     {
-      label: "Current Term",
-      render: (row) => (
-        <span
-          className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-semibold
-          ${row.isCurrentTerm
-              ? "bg-green-100 text-green-800 ring-1 ring-green-400 shadow-sm animate-pulse"
-              : "bg-gray-100 text-gray-700"}`}
-        >
-          {row.isCurrentTerm ? (
-            <>
-              <CheckCircle className="w-4 h-4" />
-              Current
-            </>
-          ) : (
-            <>
-              <MinusCircle className="w-4 h-4" />
-              Not Current
-            </>
-          )}
-        </span>
-      ),
-    },
+      label: "Status",
+      render: (row) => {
+        const now = new Date();
+        const startDate = new Date(row.startDate);
+        const endDate = new Date(row.endDate);
+    
+        let status = "";
+        let classes = "";
+        let icon = null;
+    
+        if (now < startDate) {
+          status = "Upcoming";
+          classes = "bg-blue-100 text-blue-800 ring-1 ring-blue-300";
+          icon = <Clock className="w-4 h-4" />;
+        } else if (now >= startDate && now <= endDate) {
+          status = "In Progress";
+          classes = "bg-green-100 text-green-800 ring-1 ring-green-400 animate-pulse";
+          icon = <CheckCircle className="w-4 h-4" />;
+        } else {
+          status = "Finished";
+          classes = "bg-gray-200 text-gray-600 ring-1 ring-gray-400";
+          icon = <MinusCircle className="w-4 h-4" />;
+        }
+    
+        return (
+          <span className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-semibold ${classes}`}>
+            {icon}
+            {status}
+          </span>
+        );
+      },
+    },    
     {
       label: "Actions",
       render: (row) => {

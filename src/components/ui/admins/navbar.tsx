@@ -17,43 +17,53 @@ const Navbar = () => {
     const path = location.pathname;
     const segments = path.split("/").filter(Boolean);
     const matched: { label: string; path?: string }[] = [];
-
+  
     for (const item of navbarItems) {
       if (item.isDropdown && item.children) {
-        const child = item.children.find((c) => path.startsWith(c.path));
-        if (child) {
-          matched.push({ label: item.label });
-          matched.push({ label: child.label, path: child.path });
-
+        for (const child of item.children) {
+          const childSegments = child.path.split("/").filter(Boolean);
+          const matches = childSegments.every((seg, i) => segments[i] === seg);
+  
+          if (matches) {
+            matched.push({ label: item.label });
+            matched.push({ label: child.label, path: child.path });
+  
+            const tail = segments[segments.length - 1];
+            const secondLast = segments[segments.length - 2];
+  
+            if (secondLast === "edit") {
+              matched.push({ label: "Edit" });
+            } else if (tail === "create") {
+              matched.push({ label: "Create" });
+            }
+  
+            return matched;
+          }
+        }
+      } else if (item.path) {
+        const itemSegments = item.path.split("/").filter(Boolean);
+        const matches = itemSegments.every((seg, i) => segments[i] === seg);
+  
+        if (matches) {
+          matched.push({ label: item.label, path: item.path });
+  
           const tail = segments[segments.length - 1];
           const secondLast = segments[segments.length - 2];
-
+  
           if (secondLast === "edit") {
             matched.push({ label: "Edit" });
           } else if (tail === "create") {
             matched.push({ label: "Create" });
           }
-
+  
           return matched;
         }
-      } else if (item.path && path.startsWith(item.path)) {
-        matched.push({ label: item.label, path: item.path });
-
-        const tail = segments[segments.length - 1];
-        const secondLast = segments[segments.length - 2];
-
-        if (secondLast === "edit") {
-          matched.push({ label: "Edit" });
-        } else if (tail === "create") {
-          matched.push({ label: "Create" });
-        }
-
-        return matched;
       }
     }
-
+  
     return matched;
   }, [location.pathname]);
+  
 
   return (
     <header className="sticky top-0 z-40 bg-white/20 backdrop-blur-md border-b border-white/30 shadow-sm w-full">
