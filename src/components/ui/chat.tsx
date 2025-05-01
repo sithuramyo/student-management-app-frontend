@@ -16,6 +16,7 @@ import * as signalR from "@microsoft/signalr";
 import { createSignalRConnection } from "@/lib/signalr";
 import { formatDistanceToNow } from 'date-fns';
 import { useAuthStore } from "@/store/auth";
+import { ScrollArea } from "./scroll-area";
 
 interface CreateChatRoomRequest {
   name: string;
@@ -49,14 +50,14 @@ export default function Chat() {
   const [roomId, setRoomId] = useState<string>("");
   const [connection, setConnection] = useState<signalR.HubConnection | null>(null);
   const [connectionState, setConnectionState] = useState<'disconnected' | 'connecting' | 'connected'>('disconnected');
-  
+
   // Pagination states
   const [messagePage, setMessagePage] = useState(1);
   const [hasMoreMessages, setHasMoreMessages] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  
+
   const messageBoxRef = useRef<HTMLDivElement>(null);
-  
+
   const pageSize = 5;
 
   const { register, handleSubmit, reset } = useForm<MessageFormValues>();
@@ -113,7 +114,7 @@ export default function Chat() {
           return [...newMessages, ...prev];
         });
       }
-      
+
       if (initialMessages.length < pageSize) {
         setHasMoreMessages(false);
       }
@@ -161,7 +162,7 @@ export default function Chat() {
 
       setConnectionState('connecting');
       const conn = createSignalRConnection();
-      
+
       conn.onclose(() => {
         setConnectionState('disconnected');
       });
@@ -188,7 +189,7 @@ export default function Chat() {
   const handleSelectUser = async (user: ChatUserOption) => {
     try {
       let currentConnection = connectionRef.current;
-      
+
       if (!currentConnection || currentConnection.state !== signalR.HubConnectionState.Connected) {
         currentConnection = await setupConnection();
         if (!currentConnection) {
@@ -290,7 +291,7 @@ export default function Chat() {
             value={searchUser}
             onChange={(e) => setSearchUser(e.target.value)}
           />
-          <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-[#264f3b] [&::-webkit-scrollbar-track]:bg-[#0f1f1a] [&::-webkit-scrollbar-thumb:hover]:bg-[#366d52]">
+          <ScrollArea className="h-[300px] w-[285px]">
             <div className="space-y-2">
               {isUsersLoading ? (
                 <div className="text-sm text-gray-400">Loading users...</div>
@@ -324,7 +325,7 @@ export default function Chat() {
                 ))
               )}
             </div>
-          </div>
+          </ScrollArea>
         </div>
       ) : (
         <div className="flex flex-col h-full">
@@ -354,20 +355,19 @@ export default function Chat() {
               </div>
             </div>
             <div className="flex items-center gap-1">
-              <div className={`w-2 h-2 rounded-full ${
-                connectionState === 'connected' ? 'bg-green-500' :
-                connectionState === 'connecting' ? 'bg-yellow-500' :
-                'bg-red-500'
-              }`} />
+              <div className={`w-2 h-2 rounded-full ${connectionState === 'connected' ? 'bg-green-500' :
+                  connectionState === 'connecting' ? 'bg-yellow-500' :
+                    'bg-red-500'
+                }`} />
               <span className="text-xs text-gray-400">
                 {connectionState === 'connected' ? 'Connected' :
-                 connectionState === 'connecting' ? 'Connecting...' :
-                 'Disconnected'}
+                  connectionState === 'connecting' ? 'Connecting...' :
+                    'Disconnected'}
               </span>
             </div>
           </div>
 
-          <div 
+          <div
             ref={messageBoxRef}
             onScroll={handleMessageScroll}
             className="p-4 overflow-y-auto flex-1 flex flex-col gap-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-[#264f3b] [&::-webkit-scrollbar-track]:bg-[#0f1f1a] [&::-webkit-scrollbar-thumb:hover]:bg-[#366d52]"
@@ -387,22 +387,20 @@ export default function Chat() {
                   return (
                     <div
                       key={msg.id}
-                      className={`max-w-[85%] px-4 py-2 rounded-2xl text-sm break-words relative ${
-                        isOwn
+                      className={`max-w-[85%] px-4 py-2 rounded-2xl text-sm break-words relative ${isOwn
                           ? "bg-white text-black self-end rounded-br-none"
                           : "bg-[#1e2d27] text-white self-start rounded-bl-none"
-                      }`}
+                        }`}
                     >
                       <div>{msg.content}</div>
                       <div
-                        className={`text-[10px] mt-1 ${
-                          isOwn ? "text-right text-gray-500" : "text-left text-gray-400"
-                        }`}
+                        className={`text-[10px] mt-1 ${isOwn ? "text-right text-gray-500" : "text-left text-gray-400"
+                          }`}
                       >
-                        {time.toLocaleTimeString([], { 
-                          hour: "2-digit", 
+                        {time.toLocaleTimeString([], {
+                          hour: "2-digit",
                           minute: "2-digit",
-                          hour12: true 
+                          hour12: true
                         })}
                       </div>
                     </div>
