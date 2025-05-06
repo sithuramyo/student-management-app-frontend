@@ -1,9 +1,10 @@
+import Navbar from '@/components/ui/students/navbar';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
 const FacultyLayout: React.FC = () => (
   <div>
-    <header>Faculty Header</header>
+    <Navbar />
     <main><Outlet/></main>
   </div>
 );

@@ -32,6 +32,8 @@ import CreateFaculty from './pages/admin/academics/faculties/CreateFaculty';
 import CourseOffering from './pages/admin/academics/courseofferings/CourseOffering';
 import Faculty from './pages/admin/academics/faculties/Faculty';
 import CreateCourseOffering from './pages/admin/academics/courseofferings/CreateCourseOffering';
+import ClassSchedule from './pages/admin/academics/classschedules/ClassSchedule';
+import CreateClassSchedule from './pages/admin/academics/classschedules/CreateClassSchedule';
 
 export const router = createBrowserRouter([
   {
@@ -74,7 +76,9 @@ export const router = createBrowserRouter([
       { path: 'student', element: <Student /> },
       { path: 'student/create', element: <CreateStudent /> },
       { path: 'faculty', element: <Faculty /> },
-      { path: 'faculty/create', element: <CreateFaculty /> }
+      { path: 'faculty/create', element: <CreateFaculty /> },
+      { path: 'class-schedule', element: <ClassSchedule /> },
+      { path: 'class-schedule/create', element: <CreateClassSchedule /> },
     ],
   },
   {

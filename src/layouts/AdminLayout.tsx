@@ -5,9 +5,9 @@ import Navbar from "@/components/ui/admins/navbar";
 import { Toaster } from "sonner";
 import { useErrorStore } from "@/store/errorStore";
 import ApiNotFound from "@/pages/clients/ApiNotFound";
-import Chat from "@/components/ui/chat";
 import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Chat from "@/components/ui/chatOld";
 
 const AdminLayout: React.FC = () => {
   const { showNotFound, notFoundMessage, clearNotFound } = useErrorStore();

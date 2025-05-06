@@ -1,4 +1,6 @@
+import api from "@/providers/axiosInstance";
 import { useApiQuery } from "../useQuery";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 interface PrerequisiteOption {
   id: string;
@@ -42,6 +44,8 @@ export interface ChatUserOption {
   email: string;
   profile: string;
   chatRoomId: string;
+  isOnline: boolean,
+  lastSeen: string
 }
 
 export interface ChatMessageOption {
@@ -51,6 +55,17 @@ export interface ChatMessageOption {
   sentAt: Date;
   isOwnMessage: boolean;
   seenBy: string[];
+}
+
+export interface CourseOfferingOption{
+  courseOfferings: CourseOffering[];
+  startDate: string;
+  endDate: string;
+}
+export interface CourseOffering {
+  id: string;
+  courseId: string;
+  facultyId: string;
 }
 
 export const usePrerequisiteOptions = () =>
@@ -108,6 +123,19 @@ export const useAcademicTermOptions = () =>
     }
   );
 
+export const useCourseOfferingOptions = (termId: string) =>
+  useApiQuery<CourseOfferingOption>(
+    {
+      endpoint: `/common/course-offerings/${termId}`,
+    },
+    {
+      enabled: !!termId,
+      select: (res) => ( res),
+      queryKey: ["courseoffering-options", termId],
+    }
+  );
+
+
 
 export const useChatRoomOptions = () =>
   useApiQuery<ChatRoomOption[]>(
@@ -133,10 +161,33 @@ export const useUserOptions = (search: string) =>
 
 
 
+// export const useChatMessageOptions = (
+//   roomId: string,
+//   pageSize: number
+// ) => {
+//   return useInfiniteQuery<ChatMessageOption[], Error>({
+//     queryKey: ["chat-room-messages", roomId],
+//     enabled: !!roomId,
+//     initialPageParam: 1,
+//     queryFn: async ({ pageParam = 1 }) => {
+//       const res = await api.get<ApiResponse<ChatMessageOption[]>>(
+//         `/chat/room/${roomId}/messages`,
+//         { params: { page: pageParam, pageSize } }
+//       );
+
+//       return res.data.data ?? [];
+//     },
+//     getNextPageParam: (lastPage, allPages) => {
+//       if (lastPage.length < pageSize) return undefined;
+//       return allPages.length + 1;
+//     },
+//   });
+// };
+
 export const useChatMessageOptions = (roomId: string, page: number, pageSize: number) =>
   useApiQuery<ChatMessageOption[]>(
     {
-      endpoint: roomId ? `/chat/room/${roomId}/messages?page=${page}&pageSize=${pageSize}` : "",
+      endpoint: `/chat/room/${roomId}/messages?page=${page}&pageSize=${pageSize}`,
     },
     {
       enabled: !!roomId,
