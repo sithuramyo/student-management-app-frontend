@@ -31,7 +31,6 @@ interface CourseScheduleForm {
   courseTitle: string;
   facultyName: string;
   scheduleDate: string;
-  dayOfWeek: number;
   startTime: { hour: number; minute: number };
   endTime: { hour: number; minute: number };
   location: string;
@@ -42,7 +41,6 @@ interface CourseSchedulePayload {
   courseOfferingId: string;
   courseTitle: string;
   facultyName: string;
-  dayOfWeek: number;
   startTime: string; // "HH:mm"
   endTime: string;   // "HH:mm"
   location: string;
@@ -120,7 +118,6 @@ export default function Create() {
       courseTitle: item.courseTitle,
       facultyName: item.facultyName,
       scheduleDate: item.scheduleDate,
-      dayOfWeek: item.dayOfWeek,
       location: item.location,
       startTime: formatTime(item.startTime),
       endTime: formatTime(item.endTime),
@@ -155,63 +152,25 @@ export default function Create() {
               />
 
               {fields.map((field, index) => (
-                <div key={field.id} className="border rounded p-4 space-y-4 bg-muted/30">
-                  <div>
-                    <label className="text-sm font-medium">Schedule Date</label>
-                    <Controller
-                      name={`courseSchedules.${index}.scheduleDate`}
-                      control={form.control}
-                      render={({ field }) => (
-                        <input
-                          type="date"
-                          {...field}
-                          className="w-full border rounded px-3 py-2"
-                          min={courseOffering.startDate}
-                          max={courseOffering.endDate}
-                        />
-                      )}
-                    />
-                  </div>
-
+                <div key={field.id} className="border rounded p-4 bg-muted/30 space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-sm font-medium">Course</label>
-                      <input
-                        readOnly
-                        className="w-full bg-gray-100 border px-3 py-2 rounded"
-                        value={field.courseTitle}
-                      />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium">Faculty</label>
-                      <input
-                        readOnly
-                        className="w-full bg-gray-100 border px-3 py-2 rounded"
-                        value={field.facultyName}
-                      />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium">Day of Week</label>
+                      <label className="text-sm font-medium">Schedule Date</label>
                       <Controller
-                        name={`courseSchedules.${index}.dayOfWeek`}
+                        name={`courseSchedules.${index}.scheduleDate`}
                         control={form.control}
                         render={({ field }) => (
-                          <select
+                          <input
+                            type="date"
                             {...field}
-                            onChange={(e) => field.onChange(Number(e.target.value))}
                             className="w-full border rounded px-3 py-2"
-                          >
-                            {["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map(
-                              (day, i) => (
-                                <option key={i} value={i}>
-                                  {day}
-                                </option>
-                              )
-                            )}
-                          </select>
+                            min={courseOffering.startDate}
+                            max={courseOffering.endDate}
+                          />
                         )}
                       />
                     </div>
+
                     <div>
                       <label className="text-sm font-medium">Location</label>
                       <Controller
@@ -226,6 +185,25 @@ export default function Create() {
                         )}
                       />
                     </div>
+
+                    <div>
+                      <label className="text-sm font-medium">Course</label>
+                      <input
+                        readOnly
+                        className="w-full bg-gray-100 border px-3 py-2 rounded"
+                        value={field.courseTitle}
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-sm font-medium">Faculty</label>
+                      <input
+                        readOnly
+                        className="w-full bg-gray-100 border px-3 py-2 rounded"
+                        value={field.facultyName}
+                      />
+                    </div>
+
                     <div>
                       <label className="text-sm font-medium">Start Time</label>
                       <div className="flex gap-2">
@@ -259,6 +237,7 @@ export default function Create() {
                         />
                       </div>
                     </div>
+
                     <div>
                       <label className="text-sm font-medium">End Time</label>
                       <div className="flex gap-2">
@@ -295,6 +274,7 @@ export default function Create() {
                   </div>
                 </div>
               ))}
+
 
               <div className="flex justify-end pt-4">
                 <Button type="submit" disabled={mutation.isPending}>
